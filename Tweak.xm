@@ -15,95 +15,87 @@ BOOL gameOver;
 %hook ViewController
 %new
 -(void)initializeAI{
-  AIEnabled = YES;
-  NSLog(@"INIT AI");
-  //...
-  NSLog(@"Gameover: %@", gameOver ? @"YES" : @"NO");
-  while(! gameOver){
-    [NSThread sleepForTimeInterval:.2];
-    NSMutableArray* array = MSHookIvar<NSMutableArray*>(self, "theCubeTab");
-    dispatch_sync(dispatch_get_main_queue(), ^{
-	[self makeMove:[AI bestMoveForArray:array]];
-      });
-  }
+    AIEnabled = YES;
+    [[%c(UIApplication) sharedApplication] setIdleTimerDisabled:YES];
+    while(! gameOver){
+	NSMutableArray* array = MSHookIvar<NSMutableArray*>(self, "theCubeTab");
+	dispatch_sync(dispatch_get_main_queue(), ^{
+	    [self makeMove:[AI bestMoveForArray:array]];
+	});
+    }
 }
 %new
 -(void)makeMove:(NSInteger)move{
-
-  switch (move){
+    switch (move){
     case 0:
-      [self upSwipeHandle:nil];
-      break;
+	[self upSwipeHandle:nil];
+	break;
     case 1:
-      [self downSwipeHandle:nil];
-      break;
+	[self downSwipeHandle:nil];
+	break;
     case 2:
-      [self leftSwipeHandle:nil];
-      break;
+	[self leftSwipeHandle:nil];
+	break;
     case 3:
-      [self rightSwipeHandle:nil];
-      break;
+	[self rightSwipeHandle:nil];
+	break;
     default:
-      break;
+	break;
   }
 }
 
 -(void)rightSwipeHandle:(id)handle{
-  %orig;
-  if(! AIEnabled){
-    if(codeCount == 5 || codeCount == 7) codeCount++;
-    else codeCount =0;
+    %orig;
+    if(! AIEnabled){
+	if(codeCount == 5 || codeCount == 7) codeCount++;
+	else codeCount =0;
 
-    if(codeCount == 8){
-      NSLog(@"KONAMI CODE ENTERED");
-      [NSThread detachNewThreadSelector:@selector(initializeAI) toTarget:self withObject:nil];
+	if(codeCount == 8){
+	    [NSThread detachNewThreadSelector:@selector(initializeAI) toTarget:self withObject:nil];
+	}
     }
-  }
 }
 -(void)leftSwipeHandle:(id)handle{
-  %orig;
-  if(! AIEnabled){
-    if(codeCount == 4 || codeCount==6) codeCount++;
-    else codeCount = 0;
-  }
+    %orig;
+    if(! AIEnabled){
+	if(codeCount == 4 || codeCount==6) codeCount++;
+	else codeCount = 0;
+    }
 }
 -(void)downSwipeHandle:(id)handle{
-  %orig;
-  if(! AIEnabled){
-    if(codeCount>1 && codeCount <4) codeCount++;
-    else codeCount = 0;
-  }
+    %orig;
+    if(! AIEnabled){
+	if(codeCount>1 && codeCount <4) codeCount++;
+	else codeCount = 0;
+    }
 }
 -(void)upSwipeHandle:(id)handle{
-  %orig;
-  if(! AIEnabled){
-    if(codeCount < 2) codeCount++;
-    else codeCount = 0;
-  }
+    %orig;
+    if(! AIEnabled){
+	if(codeCount < 2) codeCount++;
+	else codeCount = 0;
+    }
 }
-//hook gameover
+
 -(void)gameOver:(id)over{
-  %orig;
-  gameOver = YES;
+    %orig;
+    gameOver = YES;
 }
-//hook try agains
+
 -(void)tryAgain:(id)again{
-  %orig;
-  if(AIEnabled){
-    [NSThread detachNewThreadSelector:@selector(initializeAI) toTarget:self withObject:nil];
-  }
+    %orig;
+    if(AIEnabled){
+	[NSThread detachNewThreadSelector:@selector(initializeAI) toTarget:self withObject:nil];
+    }
 }
--(void)tryAgainChallenge:(id)challenge{
-  %orig;
-  if(AIEnabled){
-    [NSThread detachNewThreadSelector:@selector(initializeAI) toTarget:self withObject:nil];
-  }
+-(void)startGame{
+    %orig;
+    AIEnabled = NO;
+    codeCount = 0;
+    gameOver = NO;
 }
 %end
 
 %ctor{
-  %init;
-  AIEnabled = NO;
-  codeCount = 0;
-  gameOver = NO;
+    %init;
 }
