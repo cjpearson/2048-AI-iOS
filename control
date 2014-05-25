@@ -1,0 +1,9 @@
+Package: com.connorjpearson.2048konamicode
+Name: 2048 Konami Code
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: Connor Pearson
+Author: Connor Pearson
+Section: Tweaks
