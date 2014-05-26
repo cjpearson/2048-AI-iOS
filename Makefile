@@ -5,8 +5,8 @@ SDKVERSION = 7.0
 
 include theos/makefiles/common.mk
 
-TWEAK_NAME = 2048KonamiCode
-2048KonamiCode_FILES = Tweak.xm AI.mm
+TWEAK_NAME = 2048AI
+2048AI_FILES = Tweak.xm AI.mm
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 

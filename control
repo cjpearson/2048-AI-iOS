@@ -1,9 +1,9 @@
-Package: com.connorjpearson.2048konamicode
-Name: 2048 Konami Code
+Package: com.connorjpearson.2048ai
+Name: 2048 AI
 Depends: mobilesubstrate
 Version: 1.0.0
 Architecture: iphoneos-arm
-Description: Adds an AI to the 2048 app by ketchapp. Up Up Down Down Left Right Left Right and let the computer take over. 
+Description: Adds an AI to the 2048 app by ketchapp. Swipe Up Up Down Down Left Right Left Right and let the computer take over. Uses Robert Xiao's 2048 AI. 
 Maintainer: Connor Pearson
 Author: Connor Pearson
 Section: Tweaks
