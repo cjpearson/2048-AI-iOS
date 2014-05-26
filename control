@@ -1,9 +1,9 @@
 Package: com.connorjpearson.2048konamicode
 Name: 2048 Konami Code
 Depends: mobilesubstrate
-Version: 0.0.1
+Version: 1.0.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: Adds an AI to the 2048 app by ketchapp. Up Up Down Down Left Right Left Right and let the computer take over. 
 Maintainer: Connor Pearson
 Author: Connor Pearson
 Section: Tweaks
