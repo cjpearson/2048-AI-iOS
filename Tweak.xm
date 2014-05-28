@@ -17,10 +17,12 @@ BOOL gameOver;
 -(void)initializeAI{
     AIEnabled = YES;
     [[%c(UIApplication) sharedApplication] setIdleTimerDisabled:YES];
+     
     while(! gameOver){
 	NSMutableArray* array = MSHookIvar<NSMutableArray*>(self, "theCubeTab");
+	int move = [AI bestMoveForArray:array];
 	dispatch_sync(dispatch_get_main_queue(), ^{
-	    [self makeMove:[AI bestMoveForArray:array]];
+	    [self makeMove:move];
 	});
     }
 }
